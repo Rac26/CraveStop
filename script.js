@@ -86,7 +86,7 @@ function renderSidebar(role, active) {
   if (role === "admin") {
     return `
         <div class="sidebar">
-          <div class="logo"><img src="white-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Admin</span></div>
+          <div class="logo"><img src="logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Admin</span></div>
           <div class="menu">
             <a href="#admin_dashboard" class="${active === 'admin_dashboard' ? 'active' : ''}">Monitoring</a>
             <a href="#admin_controlling" class="${active === 'admin_controlling' ? 'active' : ''}">Controlling</a>
@@ -104,7 +104,7 @@ function renderSidebar(role, active) {
   } else {
     return `
         <div class="sidebar">
-          <div class="logo"><img src="white-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Staff</span></div>
+          <div class="logo"><img src="logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Staff</span></div>
           <div class="menu">
             <a href="#staff_pos" class="${active === 'staff_pos' ? 'active' : ''}">POS</a>
             <a href="#staff_product_management" class="${active === 'staff_product_management' ? 'active' : ''}">Product Management</a>
@@ -157,7 +157,7 @@ function renderMobileHeader(role, active) {
   return `
     <div class="mobile-header">
       <div class="logo-section">
-        <img src="white-logo.png" alt="Logo" width="52">
+        <img src="logo.png" alt="Logo" width="52">
         <span>CraveStop POS</span>
       </div>
       <button class="menu-toggle" id="menuToggle">
@@ -245,9 +245,9 @@ function setupMobileMenu() {
       <div class="login-center-wrap">
         <div class="login-card">
           <div class="login-avatar-outer">
-            <img src="logo.png" alt="Logo" style="width:100px;object-fit:contain;border-radius:50%;"/>
+            <img src="logo-black.png" alt="Logo" style="width:100px;object-fit:contain;border-radius:50%;"/>
         </div>
-          <h1>Welcome</h1>
+          <h1 class="uwu">Welcome</h1>
           <p>Enter your username and password to access your account.</p>
         <form id="loginForm">
             <div class="floating-group">

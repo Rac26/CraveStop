@@ -12,9 +12,9 @@
 }
 
 
-.logo-deym {
+h1{
   text-align: center;
-  font-size:35px;
+  font-size:30px;
   font-weight: 800;
   color: #e63946;
   margin-bottom: 5px;
@@ -25,7 +25,6 @@
   color: transparent;
   background-size: 400% 400%;
   animation: gradient 3s ease infinite;
-  margin-top: 20px;
 }
 
 @keyframes gradient {
@@ -43,7 +42,34 @@
 }
 
 
+.uwu{
+  text-align: center;
+  font-size:15px;
+  font-weight: 800;
+  color: #e63946;
+  margin-bottom: 5px;
+  letter-spacing: -1.2px;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(45deg, red, blue, rgb(214, 91, 112), yellow);
+  background-clip: text;
+  color: transparent;
+  background-size: 400% 400%;
+  animation: gradient 3s ease infinite;
+}
 
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
 
 
 body {
@@ -101,7 +127,6 @@ a {
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .sidebar .menu a.active,
@@ -112,9 +137,8 @@ a {
 }
 
 .sidebar .logout {
-  margin-left: 10px;
-  margin-bottom: 10px;
   border-radius: 10px;
+  margin:10px;
   text-align: center;
   width: 90%;
   padding: 16px 24px;
@@ -432,7 +456,7 @@ select {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 280px;
+  width:215px;
   height: 100vh;
   background: white;
   z-index: 1000;
@@ -476,8 +500,8 @@ select {
 .menu-section-title {
   padding: 0 20px 8px 20px;
   font-size: 0.85em;
-  font-weight: 600;
-  color: #666;
+  font-weight: bolder;
+  color: #000000;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
