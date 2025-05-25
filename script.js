@@ -80,7 +80,7 @@ const DEFAULT_USERS = [
     }
   }
   
-  // --- Navs ---
+  // --- Narvs ---
 function renderSidebar(role, active) {
   if (window.innerWidth <= 900) return ""; // Hide sidebar sa mobile
   if (role === "admin") {
