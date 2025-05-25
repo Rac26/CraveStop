@@ -80,13 +80,13 @@ const DEFAULT_USERS = [
     }
   }
   
-  // --- Narvs ---
+  // --- Navs ---
 function renderSidebar(role, active) {
   if (window.innerWidth <= 900) return ""; // Hide sidebar sa mobile
   if (role === "admin") {
     return `
         <div class="sidebar">
-          <div class="logo"><img src="White-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Admin</span></div>
+          <div class="logo"><img src="white-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Admin</span></div>
           <div class="menu">
             <a href="#admin_dashboard" class="${active === 'admin_dashboard' ? 'active' : ''}">Monitoring</a>
             <a href="#admin_controlling" class="${active === 'admin_controlling' ? 'active' : ''}">Controlling</a>
@@ -104,7 +104,7 @@ function renderSidebar(role, active) {
   } else {
     return `
         <div class="sidebar">
-          <div class="logo"><img src="White-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Staff</span></div>
+          <div class="logo"><img src="white-logo.png" alt="Logo" width="60"> CraveStop POS<br><span style="font-size:0.8em;font-weight:normal;">Staff</span></div>
           <div class="menu">
             <a href="#staff_pos" class="${active === 'staff_pos' ? 'active' : ''}">POS</a>
             <a href="#staff_product_management" class="${active === 'staff_product_management' ? 'active' : ''}">Product Management</a>
@@ -157,7 +157,7 @@ function renderMobileHeader(role, active) {
   return `
     <div class="mobile-header">
       <div class="logo-section">
-        <img src="White-logo.png" alt="Logo" width="52">
+        <img src="white-logo.png" alt="Logo" width="52">
         <span>CraveStop POS</span>
       </div>
       <button class="menu-toggle" id="menuToggle">
@@ -502,7 +502,7 @@ function renderAdminDashboard() {
     function renderProductTable(filteredProducts) {
       return `
         <table class="table">
-          <tr><th>Name</th><th>Price</th><th>Stock</th><th class="action">Action</th></tr>
+          <tr><th>Name</th><th>Price</th><th>Stock</th><th>Action</th></tr>
         ${filteredProducts.map(p => `
             <tr>
               <td>${p.name}</td>
@@ -510,7 +510,7 @@ function renderAdminDashboard() {
               <td>${p.stock}</td>
               <td>
                 <button class="btn" onclick="editProduct(${p.id})">Edit</button>
-                <button class="btn danger pdct" onclick="deleteProduct(${p.id})">Delete</button>
+                <button class="btn danger prdct" onclick="deleteProduct(${p.id})">Delete</button>
               </td>
             </tr>
           `).join("")}
@@ -536,16 +536,16 @@ function renderAdminDashboard() {
         ${renderProductTable(products)}
       </div>
       <div id="addProductModal" style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;">
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;">
         <form id="addProductForm" style="background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 8px #0002;width:320px;position:relative;">
         
           <h3 id="productFormTitle">Add Product</h3>
@@ -571,12 +571,11 @@ function renderAdminDashboard() {
 
     // Search bar logic
     document.getElementById('productSearch').addEventListener('input', function(e) {
-      searchTerm = e.target.value.toLowerCase();
-      const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm));
-      document.getElementById('productTableContainer').innerHTML = renderProductTable(filtered);
+      searchTerm = e.target.value;
+      updateProductList();
     });
 
-    // Add product modal functions
+    //function para sa add product
     window.showAddProduct = function() {
       $("#addProductModal").style.display = "flex";
       $("#productFormTitle").textContent = "Add Product";
@@ -585,12 +584,9 @@ function renderAdminDashboard() {
       $("#productStock").value = "";
       $("#productId").value = "";
     };
-
-    window.hideAddProduct = function() {
-      $("#addProductModal").style.display = "none";
-    };
-
-    //edit product ganun
+    //function para sa cancel add product
+    window.hideAddProduct = function() { $("#addProductModal").style.display = "none"; };
+    //function para sa edit product
     window.editProduct = function(id) {
       const p = products.find(p => p.id === id);
       if (!p) return;
@@ -601,7 +597,7 @@ function renderAdminDashboard() {
       $("#productStock").value = p.stock;
       $("#productId").value = p.id;
     };
-
+    //function para sa delete product
     window.deleteProduct = function(id) {
       if (confirm("Delete product?")) {
         products = products.filter(p => p.id !== id);
@@ -609,29 +605,25 @@ function renderAdminDashboard() {
         renderAdminProductManagement(activeMenu);
       }
     };
-
-    // Form submission
-    $("#addProductForm").onsubmit = function(e) {
+    //function para sa save product
+    $("#addProductForm") && ($("#addProductForm").onsubmit = function(e) {
       e.preventDefault();
       const name = $("#productName").value.trim();
       const price = parseFloat($("#productPrice").value);
       const stock = parseInt($("#productStock").value);
       const id = $("#productId").value;
-      
       if (id) {
-        // Edit existing product
+        // Edit shits
         products = products.map(p => p.id == id ? { ...p, name, price, stock } : p);
       } else {
-        // Add new product
+        // Add shits
         const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
         products.push({ id: newId, name, price, stock });
       }
-      
       setProducts(products);
       hideAddProduct();
       renderAdminProductManagement(activeMenu);
-    };
-
+    });
     setupMobileMenu();
   }
   
@@ -757,7 +749,7 @@ function renderAdminInventory() {
       <div>
         <div style="font-size:1.2em;font-weight:600;margin-bottom:4px;">${s.name}</div>
         <div style="font-size:0.98em;color:#444;">Category: ${s.category || 'Uncategorized'} | Quantity: ${s.stock} | Expiry Date: ${s.expiry || ''}</div>
-        <div style="font-size:0.98em;color:#444;">${s.lastRestock ? 'Last Restock: ' + s.lastRestock + ' | ' : ''}Status: <span style='color:${getStatus(s) === 'Low Stock' ? 'red' : '#1abc60'};font-weight:bold;'>${getStatus(s)}</span></div>
+        <div style="font-size:0.98em;color:#444;">${s.lastRestock ? 'Last Restock: ' + s.lastRestock + ' | ' : ''}Status: <span style='color:${getStatus(s) === 'Low Stock' ? '#e67e22' : '#1abc60'};font-weight:bold;'>${getStatus(s)}</span></div>
       </div>
       <div style="display:flex;gap:8px;">
         <button class="btn" onclick="editSupply(${realIdx})">Edit</button>
@@ -1406,136 +1398,7 @@ function renderAdminInventory() {
   }
   
   function renderStaffProductManagement() {
-    const user = getCurrentUser();
-    $("#app").innerHTML = `
-      ${renderSidebar(user.role, "staff_product_management")}
-      ${renderMobileHeader(user.role, "staff_product_management")}
-      <div class="main">
-        <h1 style="text-align:center;">Product Management</h1>
-        <div style="max-width:400px;margin:0 auto 18px auto;">
-          <input type="text" id="productSearch" placeholder="Search product name..." style="width:100%;padding:10px 14px;font-size:1em;border-radius:24px;border:2px solid #1abc60;outline:none;">
-        </div>
-        <button class="btn" onclick="showAddProduct()">Add Product</button>
-        <div id="productTableContainer">
-          ${renderProductTable(getProducts())}
-        </div>
-        <div id="addProductModal" style="
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0,0,0,0.5);
-          z-index: 1000;
-          justify-content: center;
-          align-items: center;">
-          <form id="addProductForm" style="background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 8px #0002;width:320px;position:relative;">
-            <h3 id="productFormTitle">Add Product</h3>
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" id="productName" required>
-            </div>
-            <div class="form-group">
-              <label>Price</label>
-              <input type="number" id="productPrice" required>
-            </div>
-            <div class="form-group">
-              <label>Stock</label>
-              <input type="number" id="productStock" required>
-            </div>
-            <input type="hidden" id="productId">
-            <button class="btn" type="submit">Save</button>
-            <button class="btn secondary" type="button" onclick="hideAddProduct()">Cancel</button>
-          </form>
-        </div>
-      </div>
-    `;
-
-    // Search bar logic
-    document.getElementById('productSearch').addEventListener('input', function(e) {
-      const searchTerm = e.target.value.toLowerCase();
-      const filtered = getProducts().filter(p => p.name.toLowerCase().includes(searchTerm));
-      document.getElementById('productTableContainer').innerHTML = renderProductTable(filtered);
-    });
-
-    // Add product modal functions
-    window.showAddProduct = function() {
-      $("#addProductModal").style.display = "flex";
-      $("#productFormTitle").textContent = "Add Product";
-      $("#productName").value = "";
-      $("#productPrice").value = "";
-      $("#productStock").value = "";
-      $("#productId").value = "";
-    };
-
-    window.hideAddProduct = function() {
-      $("#addProductModal").style.display = "none";
-    };
-
-    window.editProduct = function(id) {
-      const p = getProducts().find(p => p.id === id);
-      if (!p) return;
-      $("#addProductModal").style.display = "flex";
-      $("#productFormTitle").textContent = "Edit Product";
-      $("#productName").value = p.name;
-      $("#productPrice").value = p.price;
-      $("#productStock").value = p.stock;
-      $("#productId").value = p.id;
-    };
-
-    window.deleteProduct = function(id) {
-      if (confirm("Delete product?")) {
-        let products = getProducts();
-        products = products.filter(p => p.id !== id);
-        setProducts(products);
-        renderStaffProductManagement();
-      }
-    };
-
-    // Form submission
-    $("#addProductForm").onsubmit = function(e) {
-      e.preventDefault();
-      const name = $("#productName").value.trim();
-      const price = parseFloat($("#productPrice").value);
-      const stock = parseInt($("#productStock").value);
-      const id = $("#productId").value;
-      
-      let products = getProducts();
-      if (id) {
-        // Edit existing product
-        products = products.map(p => p.id == id ? { ...p, name, price, stock } : p);
-      } else {
-        // Add new product
-        const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-        products.push({ id: newId, name, price, stock });
-      }
-      
-      setProducts(products);
-      hideAddProduct();
-      renderStaffProductManagement();
-    };
-
-    setupMobileMenu();
-  }
-  
-  function renderProductTable(products) {
-    return `
-      <table class="table">
-        <tr><th>Name</th><th>Price</th><th>Stock</th><th class="action">Action</th></tr>
-        ${products.map(p => `
-          <tr>
-            <td>${p.name}</td>
-            <td>₱${p.price}</td>
-            <td>${p.stock}</td>
-            <td>
-              <button class="btn" onclick="editProduct(${p.id})">Edit</button>
-              <button class="btn danger pdct" onclick="deleteProduct(${p.id})">Delete</button>
-            </td>
-          </tr>
-        `).join("")}
-      </table>
-    `;
+    renderAdminProductManagement("staff_product_management");
   }
   
   // --- Chart shit ---
